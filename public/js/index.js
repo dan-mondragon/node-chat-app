@@ -10,4 +10,18 @@ socket.on('disconnect', function() {
 
 socket.on('newMessage', function(message) {
     console.log('New Mesage: ', message);
+    var li = $('<li></li>');
+    li.text(`${message.from}: ${message.text}`);
+    $('#messages').append(li);
+});
+
+
+$('#message-form').on('submit', function(e){
+    e.preventDefault();
+    socket.emit('createMessage', {
+        from: 'User',
+        text: $('[name=message]').val()
+    }, function(){
+
+    });
 });
