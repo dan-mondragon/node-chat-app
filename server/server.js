@@ -15,8 +15,18 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
     console.log('new user connected');
 
+    socket.emit('newMessage', {
+        from: 'Server',
+        text: 'Welcome to chat room',
+        createAt: 123
+    });
+
     socket.on('disconnect', () => {
         console.log('User disconnected');
+    });
+
+    socket.on('createMessage', (message) => {
+        console.log('Create Message', message);
     });
 });
 
