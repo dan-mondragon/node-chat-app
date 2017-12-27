@@ -24,6 +24,27 @@ class Users {
         var user = this.users.filter((user) => user.id === id)[0];
         return user;
     }
+    getUserByName(name){
+        var user = this.users.filter((user) => user.name === name)[0];
+        return user;
+    }
+    getUserByNameRoom(name, room){
+        var user = this.users.filter((user) =>  {
+            if(user.name === name && user.room === room){
+                return user;
+            }
+        });
+        return user[0];
+    }
+    getRooms(){
+        var rooms = this.users.map((user) => {
+            return user.room;
+        });
+        var roomNames = rooms.filter((elem, pos, arr) => {
+            return arr.indexOf(elem) == pos;
+          });
+        return roomNames;
+    }
 }
 
 module.exports = {Users};

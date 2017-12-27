@@ -62,4 +62,20 @@ describe('Users', () => {
         var userList = users.getUserList('React course');
         expect(userList).toEqual(['Jen']);
     });
+    it('should return user by name', () => {
+        var user = users.getUserByName('Jen');
+        expect(user.id).toEqual('2');
+    });
+    it('should not return user by name', () => {
+        var user = users.getUserByName('Ric');
+        expect(user).toNotExist();
+    });
+    it('should return user by name and room', () => {
+        var user = users.getUserByNameRoom('Mike', 'Node course');
+        expect(user.id).toEqual('1');
+    });
+    it('should not return user by name and room', () => {
+        var user = users.getUserByNameRoom('Mike', 'React course');
+        expect(user).toNotExist();
+    });
 });

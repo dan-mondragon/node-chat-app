@@ -18,10 +18,17 @@ app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
     console.log('new user connected');
+    socket.emit('updateRoomList', users.getRooms());
 
     socket.on('join', (params, callback) => {
-        if(!isRealString(params.name) || !isRealString(params.room)){
-            return callback('Name and room name are required');
+        if(!isRealString(params.name)){
+            return callback('Name is required');
+        }
+        if(!isRealString(params.room)){
+            params.room = params.roomSelect;
+        }
+        if(users.getUserByNameRoom(params.name, params.room)){
+            return callback('Name already in use');
         }
         socket.join(params.room);
         users.removeUser(socket.id);
